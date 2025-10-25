@@ -17,246 +17,356 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  color:#e5e7eb;
-  overflow-x:hidden;
-  background:var(--bg);
+    font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    color:#e5e7eb;
+    overflow-x:hidden;
+    background:#000;
+    min-height:100vh;
 }
-.hero,.mid-matrix{
-  position:relative;
-  overflow:hidden;
-  background:#000;
+/* ---- flashing dotted grid (3s loop) ---- */
+.dots{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background-image:radial-gradient(circle,#111 1.75px,transparent 1.75px);
+    background-size:35px 35px;
+    animation:flash 3s infinite;
 }
-.hero{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+@keyframes flash{
+    0%,100%{filter:brightness(1);}
+    50%{filter:brightness(1.4);}
 }
-.matrix-bg{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  background:radial-gradient(ellipse at bottom,#1b2735 0%,#090a0f 100%);
+/* ---- 0.0025 speed mouse glow ---- */
+.glow-circle{
+    position:fixed;
+    top:0;left:0;
+    width:250px;
+    height:250px;
+    background:radial-gradient(circle,rgba(34,197,94,.5) 0%,rgba(34,197,94,0) 70%);
+    pointer-events:none;
+    z-index:-1;
+    transform:translate(-50%,-50%);
+    opacity:0;
+    transition:opacity .3s ease;
 }
-.matrix-rain{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
+.glow-circle.visible{opacity:1;}
+section{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:4rem 2rem;
 }
-.drop{
-  position:absolute;
-  top:-50px;
-  font-size:18px;
-  color:var(--tx);
-  text-shadow:var(--glow);
-  animation:matrix-fall 10s linear infinite;
+.content{
+    text-align:center;
+    max-width:900px;
+    width:100%;
 }
-@keyframes matrix-fall{
-  to{transform:translateY(calc(100vh + 50px));}
-}
-.star{
-  position:absolute;
-  border-radius:50%;
-  background:var(--tx);
-  box-shadow:var(--glow);
-  opacity:.8;
-  animation:twinkle 2s infinite;
-}
-@keyframes twinkle{
-  0%,100%{opacity:.2;}
-  50%{opacity:1;}
-}
-.hero-content,.mid-content{
-  position:relative;
-  z-index:3;
-  text-align:center;
-  padding:0 1rem;
-}
-.hero-content{padding:4rem 1rem;}
 h1{
-  font-size:3rem;
-  color:var(--tx);
-  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
-  margin-bottom:1.5rem;
+    font-size:4.5rem;
+    color:var(--tx);
+    text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+    margin-bottom:.5rem;
+    letter-spacing:3px;
+}
+h2{
+    font-size:2rem;
+    color:var(--tx);
+    text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+    margin-bottom:1.5rem;
 }
 p{
-  margin-bottom:2rem;
-  font-size:1.1rem;
-  text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;
+    margin-bottom:1.5rem;
+    font-size:1.1rem;
+    text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;
 }
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
-  padding:.75rem 1.5rem;border-radius:.5rem;font-weight:600;text-decoration:none;
-  background:linear-gradient(135deg,var(--af),var(--at));
-  color:#fff;
-  box-shadow:var(--glow);
-  transition:transform .2s,box-shadow .2s;
+    display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+    padding:.75rem 1.5rem;border-radius:.5rem;font-weight:600;text-decoration:none;
+    background:linear-gradient(135deg,var(--af),var(--at));
+    color:#fff;
+    box-shadow:var(--glow);
+    transition:transform .2s,box-shadow .2s;
 }
 .btn:hover{transform:translateY(-2px);box-shadow:0 0 6px var(--tx),0 0 12px var(--tx),0 0 24px var(--tx);}
-.slides{
-  position:relative;
-  z-index:3;
-  display:flex;
-  gap:2rem;
-  justify-content:center;
-  flex-wrap:wrap;
-  padding:4rem 2rem;
+.download-count{
+    margin-top:.5rem;
+    font-size:.9rem;
+    color:var(--mu);
+    text-shadow:0 0 2px #000;
 }
-.slide{
-  background:var(--su);
-  border:1px solid var(--li);
-  border-radius:1rem;
-  width:300px;
-  padding:2rem;
-  box-shadow:0 0 20px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.05);
-  opacity:0;
-  transform:translateY(50px);
-  transition:all .6s;
+.features{
+    display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin:2rem 0;
 }
-.slide.visible{
-  opacity:1;
-  transform:translateY(0);
+.feature{
+    position:relative;
+    background:rgba(22,27,34,.6);
+    border:1px solid var(--li);
+    border-radius:8px;
+    padding:.6rem 1.2rem;
+    font-size:1rem;
+    color:var(--tx);
+    text-shadow:var(--glow),0 0 2px #000;
+    box-shadow:0 0 10px rgba(0,0,0,.5);
+    cursor:default;
+    transition:background .2s;
 }
-.slide h2{
-  color:var(--tx);
-  margin-bottom:1rem;
-  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+.feature:hover{background:rgba(34,197,94,.1);}
+/* ---- hover detail cards ---- */
+.detail-card{
+    position:absolute;
+    top:calc(100% + 12px);
+    left:50%;
+    transform:translateX(-50%);
+    background:#111;
+    border:1px solid var(--li);
+    border-radius:8px;
+    padding:1rem 1.2rem;
+    width:320px;
+    font-size:.85rem;
+    color:#ccc;
+    text-shadow:none;
+    box-shadow:0 0 20px rgba(0,0,0,.8);
+    z-index:10;
+    display:none;
+    text-align:left;
 }
-.slide p{
-  margin-bottom:2rem;
-  text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;
+.detail-card h4{
+    color:var(--tx);
+    margin-bottom:.6rem;
+    font-size:1rem;
+    text-shadow:0 0 2px #000;
 }
-.previews{
-  position:relative;
-  z-index:3;
-  padding:4rem 2rem;
-  text-align:center;
-}
-.previews h2{
-  color:var(--tx);
-  margin-bottom:2rem;
-  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
-}
-.preview-img{
-  max-width:800px;
-  width:100%;
-  border-radius:.5rem;
-  border:1px solid var(--li);
-  margin:0 auto;
-  display:block;
+.detail-card .label{
+    font-weight:600;
+    color:#8b949e;
+    margin-top:.6rem;
+    display:block;
 }
 footer{
-  background:var(--su);
-  border-top:1px solid var(--li);
-  padding:2rem 1rem;
-  text-align:center;
+    background:var(--su);
+    border-top:1px solid var(--li);
+    padding:2rem 1rem;
+    text-align:center;
 }
 footer h3{
-  color:var(--tx);
-  margin-bottom:1rem;
-  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+    color:var(--tx);
+    margin-bottom:1rem;
+    text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
 }
 footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
 </style>
 </head>
 <body>
 
-<!-- HERO MATRIX -->
-<section class="hero">
-  <div class="matrix-bg"></div>
-  <div class="matrix-rain" id="heroRain"></div>
-  <div class="hero-content">
-    <h1>Hythera External</h1>
-    <p>Free Roblox Cheat with Built in Aimbot, ESP, Trolling Section, External Executor and a lot more!</p>
-    <a class="btn" href="#mid-matrix">Explore</a>
-  </div>
+<!-- dotted grid -->
+<div class="dots"></div>
+<!-- mouse glow -->
+<div class="glow-circle" id="glowCircle"></div>
+
+<!-- HERO -->
+<section id="hero">
+    <div class="content">
+        <h1>Hythera</h1>
+        <p class="tagline">Powerful Features at your Fingertips</p>
+        <div class="features">
+            <div class="feature" data-feature="desync">Desync</div>
+            <div class="feature" data-feature="aimbot">Aimbot</div>
+            <div class="feature" data-feature="esp">ESP</div>
+            <div class="feature" data-feature="speed">Speed</div>
+        </div>
+        <div class="user-count" id="userCount">1</div>
+        <p>active users</p>
+        <a class="btn" href="#download">Download</a>
+        <div class="download-count">📥 <span id="downCount">1</span> downloads</div>
+    </div>
 </section>
 
-<!-- MID MATRIX -->
-<section id="mid-matrix" class="mid-matrix">
-  <div class="matrix-bg"></div>
-  <div class="matrix-rain" id="midRain"></div>
-  <div class="mid-content">
-    <div class="slides">
-      <div class="slide">
-        <h2>Download</h2>
-        <p>Get the latest build instantly.</p>
-        <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download</a>
-      </div>
-      <div class="slide">
-        <h2>Discord</h2>
-        <p>Join for support & updates.</p>
-        <a class="btn" href="https://discord.gg/KavcMyy7aW">Join Discord</a>
-      </div>
-      <div class="slide">
+<!-- DOWNLOAD -->
+<section id="download">
+    <div class="content">
+        <h2>Download Hythera</h2>
+        <p>Get the latest build instantly and join thousands of active users.</p>
+        <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download Now</a>
+        <div class="download-count">📥 <span id="downCount2">1</span> downloads</div>
+    </div>
+</section>
+
+<!-- DISCORD -->
+<section id="discord">
+    <div class="content">
+        <h2>Join Discord</h2>
+        <p>Get support, updates and scripts directly from the team.</p>
+        <a class="btn" href="https://discord.gg/KavcMyy7aW">Join Server</a>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="content">
         <h2>Contact</h2>
         <p>@Turdle<br>@Hydrx<br>@WebSlink</p>
-      </div>
     </div>
-    <div class="previews">
-      <h2>Previews</h2>
-      <img src="image.png" alt="Hythera preview" class="preview-img">
+</section>
+
+<!-- PREVIEWS -->
+<section id="previews">
+    <div class="content">
+        <h2>Previews</h2>
+        <img src="image.png" alt="Hythera preview" class="preview-img">
     </div>
-  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <h3>Credits</h3>
-  <p>Hydrx (Founder)</p>
-  <p>Turdle (Co-Founder)</p>
-  <p>WebSlink (Website Creator)</p>
-  <br>
-  <p>© Rights Reserved to @Hydrx (@kingstewiereal)</p>
+    <h3>Credits</h3>
+    <p>Hydrx (Founder)</p>
+    <p>Turdle (Co-Founder)</p>
+    <p>WebSlink (Website Creator)</p>
+    <br>
+    <p>© Rights Reserved to @Hydrx (@kingstewiereal)</p>
 </footer>
 
 <script>
-// ---- matrix rain + stars ----
-function initMatrix(containerId){
-  const container=document.getElementById(containerId);
-  const symbols='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-  const numbers='0123456789';
-  const chars=numbers+numbers+symbols; // twice as many numbers
+// ---- dotted grid ----
+const dots=document.createElement('div');
+dots.className='dots';
+document.body.appendChild(dots);
 
-  // stars
-  for(let i=0;i<40;i++){
+// ---- mouse glow ----
+const glow=document.getElementById('glowCircle');
+let targetX=0,targetY=0;
+let mouseInside=true;
+
+document.addEventListener('mousemove',e=>{
+    targetX=e.clientX;
+    targetY=e.clientY;
+    if(!mouseInside){
+        mouseInside=true;
+        glow.classList.add('visible');
+    }
+});
+document.addEventListener('mouseleave',()=>{
+    mouseInside=false;
+    glow.classList.remove('visible');
+});
+document.addEventListener('mouseenter',()=>{
+    mouseInside=true;
+    glow.classList.add('visible');
+});
+
+function animateGlow(){
+    const currentX=parseFloat(glow.style.left)||0;
+    const currentY=parseFloat(glow.style.top)||0;
+    const deltaX=(targetX-currentX)*0.0025;
+    const deltaY=(targetY-currentY)*0.0025;
+    glow.style.left=(currentX+deltaX)+'px';
+    glow.style.top=(currentY+deltaY)+'px';
+    requestAnimationFrame(animateGlow);
+}
+animateGlow();
+
+// ---- matrix rain + stars ----
+const rain=document.getElementById('rain');
+const symbols='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+const numbers='0123456789';
+const chars=numbers+numbers+symbols; // twice as many numbers
+
+// stars
+for(let i=0;i<40;i++){
     const star=document.createElement('div');
     star.className='star';
     star.style.width=star.style.height=(1+Math.random()*2)+'px';
     star.style.left=Math.random()*100+'%';
     star.style.top=Math.random()*100+'%';
     star.style.animationDelay=Math.random()*3+'s';
-    container.appendChild(star);
-  }
-  // rain
-  for(let i=0;i<120;i++){
+    rain.appendChild(star);
+}
+// rain
+for(let i=0;i<120;i++){
     const drop=document.createElement('div');
     drop.className='drop';
     drop.style.left=Math.random()*100+'%';
     drop.style.animationDuration=(8+Math.random()*6)+'s';
     drop.style.animationDelay=Math.random()*5+'s';
     drop.textContent=chars[Math.floor(Math.random()*chars.length)];
-    container.appendChild(drop);
-  }
-  // randomize chars
-  setInterval(()=>{
-    container.querySelectorAll('.drop').forEach(d=>{
-      d.textContent=chars[Math.floor(Math.random()*chars.length)];
-    });
-  },250);
+    rain.appendChild(drop);
 }
-initMatrix('heroRain');
-initMatrix('midRain');
+// randomize rain chars
+setInterval(()=>{
+    rain.querySelectorAll('.drop').forEach(d=>{
+        d.textContent=chars[Math.floor(Math.random()*chars.length)];
+    });
+},250);
 
-// ---- slide reveal ----
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting)entry.target.classList.add('visible');
-  });
-},{threshold:.3});
-document.querySelectorAll('.slide').forEach(slide=>observer.observe(slide));
+// ---- active-player counter : 1 → 100 every hour ----
+const userEl=document.getElementById('userCount');
+const downEls=[document.getElementById('downCount'),document.getElementById('downCount2')];
+
+let current=1;
+const max=100;
+const msPerStep=3600000/max;           // 1 hour / 100 steps
+
+setInterval(()=>{
+    if(current<max)current++;
+    userEl.textContent=current;
+    downEls.forEach(el=>el.textContent=current);
+},msPerStep);
+
+// ---- hover detail cards ----
+const details={
+    desync:{
+        title:'🧩 Desync',
+        func:'Desync modifies how your character’s position is represented between your client and the game server. When activated, your character appears stationary to other players, while you can still move freely on your own screen.',
+        effect:'Creates the illusion that you haven’t moved.\nUseful for testing network synchronization, animation states, or custom movement prediction.\nOften visualized as your avatar “desyncing” from its true position.',
+        tech:'It works by offsetting or delaying position updates, creating an intentional desynchronization between local and remote data streams.'
+    },
+    aimbot:{
+        title:'🎯 Aimbot',
+        func:'Aimbot automatically aligns the player’s camera or aim toward a selected target, usually based on visibility, proximity, or priority settings.',
+        effect:'Instantly locks or smoothly tracks onto targets.\nRemoves manual aiming input.\nCan include adjustable aim speed, sensitivity, and target selection logic.',
+        tech:'It reads positional data of other objects (such as players or targets) and adjusts the camera or cursor to match their hitbox or center point in real time.'
+    },
+    esp:{
+        title:'👁️ ESP (Extra Sensory Perception)',
+        func:'ESP overlays visual indicators on the screen to reveal entities, players, or objects that might otherwise be hidden or out of view.',
+        effect:'Displays outlines, boxes, names, or distances of entities through walls or obstacles.\nProvides constant awareness of nearby players or items.',
+        tech:'It works by accessing in-game data about player positions and rendering custom on-screen elements (like glowing boxes or tracers) to visualize them.'
+    },
+    speed:{
+        title:'⚡ Speed',
+        func:'Speed modifies the rate of character movement or in-game actions, allowing the player to move faster than the default limit.',
+        effect:'Increases walking, running, or animation speed.\nReduces travel time across the map.\nCan affect game physics, timing, or synchronization depending on implementation.',
+        tech:'This is achieved by scaling movement vectors or animation playback rates, effectively amplifying how fast your character traverses the environment.'
+    }
+};
+
+document.querySelectorAll('.feature').forEach(el=>{
+    let card=null;
+    el.addEventListener('mouseenter',()=>{
+        const key=el.dataset.feature;
+        if(!key)return;
+        const d=details[key];
+        card=document.createElement('div');
+        card.className='detail-card';
+        card.innerHTML=`
+            <h4>${d.title}</h4>
+            <span class="label">Function:</span>
+            <div>${d.func}</div>
+            <span class="label">Effect:</span>
+            <div>${d.effect.replace(/\n/g,'<br>')}</div>
+            <span class="label">Technical Behavior:</span>
+            <div>${d.tech}</div>
+        `;
+        el.appendChild(card);
+        card.style.display='block';
+    });
+    el.addEventListener('mouseleave',()=>{
+        if(card)card.remove();
+    });
+});
 </script>
 
 </body>
