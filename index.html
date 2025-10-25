@@ -5,100 +5,163 @@
 <title>Hythera</title>
 <style>
 :root{
+  --glow:0 0 4px #22c55e,0 0 8px #22c55e,0 0 16px #22c55e;
   --af:#16a34a;
   --at:#15803d;
   --tx:#22c55e;
-  --bg:#111827;
-  --su:#1f2937;
-  --li:#374151;
-  --mu:#9ca3af;
+  --bg:#0d1117;
+  --su:#161b22;
+  --li:#30363d;
+  --mu:#8b949e;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
   font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  background:var(--bg);
   color:#e5e7eb;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
+  overflow-x:hidden;
 }
-header{
-  background:var(--su);
-  border-bottom:1px solid var(--li);
-  padding:1rem 2rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-nav a{
-  color:var(--mu);
-  text-decoration:none;
-  margin-left:1rem;
-  font-weight:600;
-}
-nav a:hover{color:var(--tx)}
-main{
-  flex:1;
+.hero{
+  height:100vh;
+  background:url(https://images.unsplash.com/photo-1507525428034-b723cf961d3e) center/cover;
+  position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:2rem;
 }
-.card{
-  background:var(--su);
-  border-radius:1rem;
-  max-width:600px;
-  width:100%;
-  padding:2rem;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.5);
+}
+.hero-content{
+  position:relative;
+  z-index:2;
   text-align:center;
+  padding:0 1rem;
 }
-h1{color:var(--tx);font-size:2.2rem;margin-bottom:.5rem}
-p{margin-bottom:1rem}
-img{
-  width:100%;
-  border-radius:.5rem;
-  margin:1rem 0;
+h1{font-size:3rem;color:var(--tx);text-shadow:var(--glow);margin-bottom:1.5rem}
+.hero-content p{margin-bottom:2rem;font-size:1.1rem}
+@keyframes scan{
+  0%{transform:translateY(-100%)}
+  100%{transform:translateY(100%)}
 }
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  height:2px;
+  background:var(--tx);
+  opacity:.08;
+  pointer-events:none;
+  animation:scan 4s linear infinite;
+}
+.slides{
+  display:flex;
+  gap:2rem;
+  padding:4rem 2rem;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.slide{
+  background:var(--su);
+  border:1px solid var(--li);
+  border-radius:1rem;
+  width:300px;
+  padding:2rem;
+  box-shadow:0 0 20px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.05);
+  opacity:0;
+  transform:translateY(50px);
+  transition:all .6s;
+}
+.slide.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.slide h2{color:var(--tx);margin-bottom:1rem;text-shadow:var(--glow)}
+.slide p{margin-bottom:2rem}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   padding:.75rem 1.5rem;border-radius:.5rem;font-weight:600;text-decoration:none;
-  transition:transform .15s,background .15s;
+  background:linear-gradient(135deg,var(--af),var(--at));
+  color:#fff;
+  box-shadow:var(--glow);
+  transition:transform .2s,box-shadow .2s;
 }
-.btn-primary{
-  background:linear-gradient(135deg,var(--af),var(--at));color:#fff;
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 6px var(--tx),0 0 12px var(--tx),0 0 24px var(--tx);}
+.previews{
+  padding:4rem 2rem;
+  text-align:center;
 }
-.btn-primary:hover{transform:translateY(-2px)}
-.btn-secondary{
-  background:var(--li);color:#e5e7eb;
+.previews h2{color:var(--tx);margin-bottom:2rem;text-shadow:var(--glow)}
+.preview-img{
+  max-width:800px;
+  width:100%;
+  border-radius:.5rem;
+  border:1px solid var(--li);
+  margin:0 auto;
+  display:block;
 }
-.btn-secondary:hover{background:#4b5563}
-.buttons{display:flex;gap:1rem;justify-content:center;margin-top:1.5rem}
+footer{
+  background:var(--su);
+  border-top:1px solid var(--li);
+  padding:2rem 1rem;
+  text-align:center;
+}
+footer h3{color:var(--tx);margin-bottom:1rem;text-shadow:var(--glow)}
+footer p{margin:.25rem 0}
 </style>
 </head>
 <body>
 
-<header>
-  <h2 style="color:var(--tx)">Hythera</h2>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="download.html">Download</a>
-    <a href="discord.html">Discord</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
-
-<main>
-  <div class="card">
+<section class="hero">
+  <div class="hero-content">
     <h1>Hythera External</h1>
-    <p>Free Windows exploit with built-in aimbot, visuals, trolling tools, Lua execution and more.</p>
-    <img src="image.png" alt="Hythera menu preview">
-    <div class="buttons">
-      <a class="btn btn-primary" href="download.html">Download</a>
-      <a class="btn btn-secondary" href="discord.html">Join Discord</a>
-    </div>
+    <p>Free Roblox Cheat with Built in Aimbot, ESP, Trolling Section, External Executor and a lot more!</p>
+    <a class="btn" href="#slides">Explore</a>
   </div>
-</main>
+</section>
+
+<div id="slides" class="slides">
+  <div class="slide">
+    <h2>Download</h2>
+    <p>Get the latest build instantly.</p>
+    <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download</a>
+  </div>
+  <div class="slide">
+    <h2>Discord</h2>
+    <p>Join for support & updates.</p>
+    <a class="btn" href="https://discord.gg/KavcMyy7aW">Join Discord</a>
+  </div>
+  <div class="slide">
+    <h2>Contact</h2>
+    <p>@its_turdle<br>@kingstewiereal<br>WebSlink (ilovecheese__22)</p>
+  </div>
+</div>
+
+<section class="previews">
+  <h2>Previews</h2>
+  <img src="image.png" alt="Hythera preview" class="preview-img">
+</section>
+
+<footer>
+  <h3>Credits</h3>
+  <p>Hydrax (Founder)</p>
+  <p>Turdle (Co-Founder)</p>
+  <p>WebSlink (Website Creator)</p>
+  <br>
+  <p>© Rights Reserved to @Hydrax (@kingstewiereal)</p>
+</footer>
+
+<script>
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting)entry.target.classList.add('visible');
+  });
+},{threshold:.3});
+document.querySelectorAll('.slide').forEach(slide=>observer.observe(slide));
+</script>
 
 </body>
 </html>
