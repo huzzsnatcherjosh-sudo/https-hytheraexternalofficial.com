@@ -17,13 +17,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-    font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     color:#e5e7eb;
     overflow-x:hidden;
     background:#000;
     min-height:100vh;
 }
-/* ---- flashing dotted grid (3s loop) ---- */
 .dots{
     position:fixed;
     inset:0;
@@ -36,7 +35,6 @@ body{
     0%,100%{filter:brightness(1);}
     50%{filter:brightness(1.4);}
 }
-/* ---- 0.0025 speed mouse glow ---- */
 .glow-circle{
     position:fixed;
     top:0;left:0;
@@ -114,7 +112,6 @@ p{
     transition:background .2s;
 }
 .feature:hover{background:rgba(34,197,94,.1);}
-/* ---- hover detail cards ---- */
 .detail-card{
     position:absolute;
     top:calc(100% + 12px);
@@ -145,6 +142,38 @@ p{
     margin-top:.6rem;
     display:block;
 }
+.user-box{
+    margin:1rem 0;
+    padding:1rem 2rem;
+    background:rgba(22,27,34,.4);
+    border:1px solid var(--li);
+    border-radius:12px;
+    display:inline-block;
+    text-align:center;
+}
+.user-number{
+    font-size:2.5rem;
+    color:var(--tx);
+    text-shadow:var(--glow),0 0 2px #000;
+    line-height:1;
+}
+.user-label{
+    font-size:.9rem;
+    color:var(--mu);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-top:.3rem;
+}
+#live-users{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+#live-users h2{font-size:3.5rem;margin-bottom:1rem;}
+#live-users .user-box{transform:scale(1.2);}
+#live-users p{margin-top:1rem;font-size:1rem;color:var(--mu);}
+
+/* ===== CONTACT ROLE-SIZING ===== */
+#contact .role-hydrx{font-size:3.5rem;margin:.2rem 0;text-shadow:var(--glow),0 0 3px #000;}
+#contact .role-turdle{font-size:2.5rem;margin:.2rem 0;text-shadow:var(--glow),0 0 3px #000;}
+#contact .role-webslink{font-size:1.4rem;margin:.2rem 0;text-shadow:0 0 3px #000;}
+
 footer{
     background:var(--su);
     border-top:1px solid var(--li);
@@ -161,9 +190,7 @@ footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
 </head>
 <body>
 
-<!-- dotted grid -->
 <div class="dots"></div>
-<!-- mouse glow -->
 <div class="glow-circle" id="glowCircle"></div>
 
 <!-- HERO -->
@@ -177,10 +204,20 @@ footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
             <div class="feature" data-feature="esp">ESP</div>
             <div class="feature" data-feature="speed">Speed</div>
         </div>
-        <div class="user-count" id="userCount">1</div>
-        <p>active users</p>
         <a class="btn" href="#download">Download</a>
-        <div class="download-count">📥 <span id="downCount">1</span> downloads</div>
+        <div class="download-count">📥 1,000+ downloads</div>
+    </div>
+</section>
+
+<!-- ACTIVE USERS -->
+<section id="live-users">
+    <div class="content">
+        <h2>Active Users</h2>
+        <div class="user-box">
+            <div class="user-number" id="liveUserCount">—</div>
+            <div class="user-label">online right now</div>
+        </div>
+        <p>Updates every minute.</p>
     </div>
 </section>
 
@@ -188,9 +225,9 @@ footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
 <section id="download">
     <div class="content">
         <h2>Download Hythera</h2>
-        <p>Get the latest build instantly and join thousands of active users.</p>
+        <p>Get the latest build instantly and join a group of active users!</p>
         <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download Now</a>
-        <div class="download-count">📥 <span id="downCount2">1</span> downloads</div>
+        <div class="download-count">📥 1,000+ downloads</div>
     </div>
 </section>
 
@@ -207,7 +244,9 @@ footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
 <section id="contact">
     <div class="content">
         <h2>Contact</h2>
-        <p>@Turdle<br>@Hydrx<br>@WebSlink</p>
+        <p class="role-hydrx">@Hydrx</p>
+        <p class="role-turdle">@Turdle</p>
+        <p class="role-webslink">@WebSlink</p>
     </div>
 </section>
 
@@ -231,141 +270,45 @@ footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
 
 <script>
 // ---- dotted grid ----
-const dots=document.createElement('div');
-dots.className='dots';
-document.body.appendChild(dots);
+document.body.appendChild(document.createElement('div')).className='dots';
 
 // ---- mouse glow ----
 const glow=document.getElementById('glowCircle');
-let targetX=0,targetY=0;
-let mouseInside=true;
+let targetX=0,targetY=0,mouseInside=true;
+document.addEventListener('mousemove',e=>{targetX=e.clientX;targetY=e.clientY;if(!mouseInside){mouseInside=true;glow.classList.add('visible');}});
+document.addEventListener('mouseleave',()=>{mouseInside=false;glow.classList.remove('visible');});
+document.addEventListener('mouseenter',()=>{mouseInside=true;glow.classList.add('visible');});
+(function animateGlow(){const cX=parseFloat(glow.style.left)||0,cY=parseFloat(glow.style.top)||0;glow.style.left=(cX+(targetX-cX)*.025)+'px';glow.style.top=(cY+(targetY-cY)*.025)+'px';requestAnimationFrame(animateGlow)})();
 
-document.addEventListener('mousemove',e=>{
-    targetX=e.clientX;
-    targetY=e.clientY;
-    if(!mouseInside){
-        mouseInside=true;
-        glow.classList.add('visible');
-    }
-});
-document.addEventListener('mouseleave',()=>{
-    mouseInside=false;
-    glow.classList.remove('visible');
-});
-document.addEventListener('mouseenter',()=>{
-    mouseInside=true;
-    glow.classList.add('visible');
-});
-
-function animateGlow(){
-    const currentX=parseFloat(glow.style.left)||0;
-    const currentY=parseFloat(glow.style.top)||0;
-    const deltaX=(targetX-currentX)*0.0025;
-    const deltaY=(targetY-currentY)*0.0025;
-    glow.style.left=(currentX+deltaX)+'px';
-    glow.style.top=(currentY+deltaY)+'px';
-    requestAnimationFrame(animateGlow);
+// ---- live active users (1 min) ----
+const liveEl=document.getElementById('liveUserCount');
+async function fetchUsers(){
+  try{
+    const r=await fetch('https://keysystem-n3ry.onrender.com/livecount');
+    if(!r.ok) throw 0;
+    const {count}=await r.json();
+    liveEl.textContent=count;
+  }catch{liveEl.textContent='?';}
 }
-animateGlow();
+fetchUsers();
+setInterval(fetchUsers,60000);
 
-// ---- matrix rain + stars ----
-const rain=document.getElementById('rain');
-const symbols='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-const numbers='0123456789';
-const chars=numbers+numbers+symbols; // twice as many numbers
-
-// stars
-for(let i=0;i<40;i++){
-    const star=document.createElement('div');
-    star.className='star';
-    star.style.width=star.style.height=(1+Math.random()*2)+'px';
-    star.style.left=Math.random()*100+'%';
-    star.style.top=Math.random()*100+'%';
-    star.style.animationDelay=Math.random()*3+'s';
-    rain.appendChild(star);
-}
-// rain
-for(let i=0;i<120;i++){
-    const drop=document.createElement('div');
-    drop.className='drop';
-    drop.style.left=Math.random()*100+'%';
-    drop.style.animationDuration=(8+Math.random()*6)+'s';
-    drop.style.animationDelay=Math.random()*5+'s';
-    drop.textContent=chars[Math.floor(Math.random()*chars.length)];
-    rain.appendChild(drop);
-}
-// randomize rain chars
-setInterval(()=>{
-    rain.querySelectorAll('.drop').forEach(d=>{
-        d.textContent=chars[Math.floor(Math.random()*chars.length)];
-    });
-},250);
-
-// ---- active-player counter : 1 → 100 every hour ----
-const userEl=document.getElementById('userCount');
-const downEls=[document.getElementById('downCount'),document.getElementById('downCount2')];
-
-let current=1;
-const max=100;
-const msPerStep=3600000/max;           // 1 hour / 100 steps
-
-setInterval(()=>{
-    if(current<max)current++;
-    userEl.textContent=current;
-    downEls.forEach(el=>el.textContent=current);
-},msPerStep);
-
-// ---- hover detail cards ----
+// ---- feature cards ----
 const details={
-    desync:{
-        title:'🧩 Desync',
-        func:'Desync modifies how your character’s position is represented between your client and the game server. When activated, your character appears stationary to other players, while you can still move freely on your own screen.',
-        effect:'Creates the illusion that you haven’t moved.\nUseful for testing network synchronization, animation states, or custom movement prediction.\nOften visualized as your avatar “desyncing” from its true position.',
-        tech:'It works by offsetting or delaying position updates, creating an intentional desynchronization between local and remote data streams.'
-    },
-    aimbot:{
-        title:'🎯 Aimbot',
-        func:'Aimbot automatically aligns the player’s camera or aim toward a selected target, usually based on visibility, proximity, or priority settings.',
-        effect:'Instantly locks or smoothly tracks onto targets.\nRemoves manual aiming input.\nCan include adjustable aim speed, sensitivity, and target selection logic.',
-        tech:'It reads positional data of other objects (such as players or targets) and adjusts the camera or cursor to match their hitbox or center point in real time.'
-    },
-    esp:{
-        title:'👁️ ESP (Extra Sensory Perception)',
-        func:'ESP overlays visual indicators on the screen to reveal entities, players, or objects that might otherwise be hidden or out of view.',
-        effect:'Displays outlines, boxes, names, or distances of entities through walls or obstacles.\nProvides constant awareness of nearby players or items.',
-        tech:'It works by accessing in-game data about player positions and rendering custom on-screen elements (like glowing boxes or tracers) to visualize them.'
-    },
-    speed:{
-        title:'⚡ Speed',
-        func:'Speed modifies the rate of character movement or in-game actions, allowing the player to move faster than the default limit.',
-        effect:'Increases walking, running, or animation speed.\nReduces travel time across the map.\nCan affect game physics, timing, or synchronization depending on implementation.',
-        tech:'This is achieved by scaling movement vectors or animation playback rates, effectively amplifying how fast your character traverses the environment.'
-    }
+    desync:{title:'🧩 Desync',func:'Desync modifies how your character’s position is represented between your client and the game server. When activated, your character appears stationary to other players, while you can still move freely on your own screen.',effect:'Creates the illusion that you haven’t moved.\nUseful for testing network synchronization, animation states, or custom movement prediction.\nOften visualized as your avatar “desyncing” from its true position.',tech:'It works by offsetting or delaying position updates, creating an intentional desynchronization between local and remote data streams.'},
+    aimbot:{title:'🎯 Aimbot',func:'Aimbot automatically aligns the player’s camera or aim toward a selected target, usually based on visibility, proximity, or priority settings.',effect:'Instantly locks or smoothly tracks onto targets.\nRemoves manual aiming input.\nCan include adjustable aim speed, sensitivity, and target selection logic.',tech:'It reads positional data of other objects (such as players or targets) and adjusts the camera or cursor to match their hitbox or center point in real time.'},
+    esp:{title:'👁️ ESP (Extra Sensory Perception)',func:'ESP overlays visual indicators on the screen to reveal entities, players, or objects that might otherwise be hidden or out of view.',effect:'Displays outlines, boxes, names, or distances of entities through walls or obstacles.\nProvides constant awareness of nearby players or items.',tech:'It works by accessing in-game data about player positions and rendering custom on-screen elements (like glowing boxes or tracers) to visualize them.'},
+    speed:{title:'⚡ Speed',func:'Speed modifies the rate of character movement or in-game actions, allowing the player to move faster than the default limit.',effect:'Increases walking, running, or animation speed.\nReduces travel time across the map.\nCan affect game physics, timing, or synchronization depending on implementation.',tech:'This is achieved by scaling movement vectors or animation playback rates, effectively amplifying how fast your character traverses the environment.'}
 };
-
 document.querySelectorAll('.feature').forEach(el=>{
     let card=null;
     el.addEventListener('mouseenter',()=>{
-        const key=el.dataset.feature;
-        if(!key)return;
-        const d=details[key];
-        card=document.createElement('div');
-        card.className='detail-card';
-        card.innerHTML=`
-            <h4>${d.title}</h4>
-            <span class="label">Function:</span>
-            <div>${d.func}</div>
-            <span class="label">Effect:</span>
-            <div>${d.effect.replace(/\n/g,'<br>')}</div>
-            <span class="label">Technical Behavior:</span>
-            <div>${d.tech}</div>
-        `;
-        el.appendChild(card);
-        card.style.display='block';
+        const d=details[el.dataset.feature];
+        card=document.createElement('div');card.className='detail-card';
+        card.innerHTML=`<h4>${d.title}</h4><span class="label">Function:</span><div>${d.func}</div><span class="label">Effect:</span><div>${d.effect.replace(/\n/g,'<br>')}</div><span class="label">Technical Behavior:</span><div>${d.tech}</div>`;
+        el.appendChild(card);card.style.display='block';
     });
-    el.addEventListener('mouseleave',()=>{
-        if(card)card.remove();
-    });
+    el.addEventListener('mouseleave',()=>card&&card.remove());
 });
 </script>
 
