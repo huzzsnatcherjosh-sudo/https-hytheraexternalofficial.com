@@ -41,8 +41,17 @@ body{
   text-align:center;
   padding:0 1rem;
 }
-h1{font-size:3rem;color:var(--tx);text-shadow:var(--glow);margin-bottom:1.5rem}
-.hero-content p{margin-bottom:2rem;font-size:1.1rem}
+h1{
+  font-size:3rem;
+  color:var(--tx);
+  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+  margin-bottom:1.5rem;
+}
+.hero-content p{
+  margin-bottom:2rem;
+  font-size:1.1rem;
+  text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;
+}
 @keyframes scan{
   0%{transform:translateY(-100%)}
   100%{transform:translateY(100%)}
@@ -57,10 +66,53 @@ body::before{
   pointer-events:none;
   animation:scan 4s linear infinite;
 }
+.content-section{
+  position:relative;
+  background:url(https://tr.rbxcdn.com/180 DAY-AheadTemplateRobloxHomepage.png) center/cover;
+  padding:4rem 2rem;
+  overflow:hidden;
+}
+.content-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.25);
+}
+.matrix-lines{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  overflow:hidden;
+}
+.line{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:var(--tx);
+  box-shadow:var(--glow);
+  animation:fall 6s linear infinite;
+}
+.line:nth-child(1){left:5%; animation-delay:0s;}
+.line:nth-child(2){left:15%; animation-delay:1s;}
+.line:nth-child(3){left:25%; animation-delay:2s;}
+.line:nth-child(4){left:35%; animation-delay:3s;}
+.line:nth-child(5){left:45%; animation-delay:4s;}
+.line:nth-child(6){left:55%; animation-delay:5s;}
+.line:nth-child(7){left:65%; animation-delay:0.5s;}
+.line:nth-child(8){left:75%; animation-delay:1.5s;}
+.line:nth-child(9){left:85%; animation-delay:2.5s;}
+.line:nth-child(10){left:95%; animation-delay:3.5s;}
+@keyframes fall{
+  0%{transform:translateY(-100%);}
+  100%{transform:translateY(100vh);}
+}
 .slides{
+  position:relative;
+  z-index:2;
   display:flex;
   gap:2rem;
-  padding:4rem 2rem;
   justify-content:center;
   flex-wrap:wrap;
 }
@@ -79,8 +131,15 @@ body::before{
   opacity:1;
   transform:translateY(0);
 }
-.slide h2{color:var(--tx);margin-bottom:1rem;text-shadow:var(--glow)}
-.slide p{margin-bottom:2rem}
+.slide h2{
+  color:var(--tx);
+  margin-bottom:1rem;
+  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+}
+.slide p{
+  margin-bottom:2rem;
+  text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;
+}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   padding:.75rem 1.5rem;border-radius:.5rem;font-weight:600;text-decoration:none;
@@ -91,10 +150,16 @@ body::before{
 }
 .btn:hover{transform:translateY(-2px);box-shadow:0 0 6px var(--tx),0 0 12px var(--tx),0 0 24px var(--tx);}
 .previews{
+  position:relative;
+  z-index:2;
   padding:4rem 2rem;
   text-align:center;
 }
-.previews h2{color:var(--tx);margin-bottom:2rem;text-shadow:var(--glow)}
+.previews h2{
+  color:var(--tx);
+  margin-bottom:2rem;
+  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+}
 .preview-img{
   max-width:800px;
   width:100%;
@@ -109,8 +174,12 @@ footer{
   padding:2rem 1rem;
   text-align:center;
 }
-footer h3{color:var(--tx);margin-bottom:1rem;text-shadow:var(--glow)}
-footer p{margin:.25rem 0}
+footer h3{
+  color:var(--tx);
+  margin-bottom:1rem;
+  text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
+}
+footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
 </style>
 </head>
 <body>
@@ -119,30 +188,43 @@ footer p{margin:.25rem 0}
   <div class="hero-content">
     <h1>Hythera External</h1>
     <p>Free Roblox Cheat with Built in Aimbot, ESP, Trolling Section, External Executor and a lot more!</p>
-    <a class="btn" href="#slides">Explore</a>
+    <a class="btn" href="#content">Explore</a>
   </div>
 </section>
 
-<div id="slides" class="slides">
-  <div class="slide">
-    <h2>Download</h2>
-    <p>Get the latest build instantly.</p>
-    <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download</a>
+<section id="content" class="content-section">
+  <div class="matrix-lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
   </div>
-  <div class="slide">
-    <h2>Discord</h2>
-    <p>Join for support & updates.</p>
-    <a class="btn" href="https://discord.gg/KavcMyy7aW">Join Discord</a>
+  <div class="slides">
+    <div class="slide">
+      <h2>Download</h2>
+      <p>Get the latest build instantly.</p>
+      <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download</a>
+    </div>
+    <div class="slide">
+      <h2>Discord</h2>
+      <p>Join for support & updates.</p>
+      <a class="btn" href="https://discord.gg/KavcMyy7aW">Join Discord</a>
+    </div>
+    <div class="slide">
+      <h2>Contact</h2>
+      <p>@its_turdle<br>@kingstewiereal<br>WebSlink (ilovecheese__22)</p>
+    </div>
   </div>
-  <div class="slide">
-    <h2>Contact</h2>
-    <p>@its_turdle<br>@kingstewiereal<br>WebSlink (ilovecheese__22)</p>
+  <div class="previews">
+    <h2>Previews</h2>
+    <img src="image.png" alt="Hythera preview" class="preview-img">
   </div>
-</div>
-
-<section class="previews">
-  <h2>Previews</h2>
-  <img src="image.png" alt="Hythera preview" class="preview-img">
 </section>
 
 <footer>
