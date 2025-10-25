@@ -9,7 +9,7 @@
   --af:#16a34a;
   --at:#15803d;
   --tx:#22c55e;
-  --bg:#0d1117;
+  --bg:#000;
   --su:#161b22;
   --li:#30363d;
   --mu:#8b949e;
@@ -20,101 +20,89 @@ body{
   font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   color:#e5e7eb;
   overflow-x:hidden;
+  background:var(--bg);
+}
+.hero,.mid-matrix{
+  position:relative;
+  overflow:hidden;
+  background:#000;
 }
 .hero{
   height:100vh;
-  background:url(https://images.unsplash.com/photo-1507525428034-b723cf961d3e) center/cover;
-  position:relative;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.hero::after{
-  content:"";
+.matrix-bg{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,.5);
+  z-index:0;
+  background:radial-gradient(ellipse at bottom,#1b2735 0%,#090a0f 100%);
 }
-.hero-content{
+.matrix-rain{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+}
+.drop{
+  position:absolute;
+  top:-50px;
+  font-size:18px;
+  color:var(--tx);
+  text-shadow:var(--glow);
+  animation:matrix-fall 10s linear infinite;
+}
+@keyframes matrix-fall{
+  to{transform:translateY(calc(100vh + 50px));}
+}
+.star{
+  position:absolute;
+  border-radius:50%;
+  background:var(--tx);
+  box-shadow:var(--glow);
+  opacity:.8;
+  animation:twinkle 2s infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.2;}
+  50%{opacity:1;}
+}
+.hero-content,.mid-content{
   position:relative;
-  z-index:2;
+  z-index:3;
   text-align:center;
   padding:0 1rem;
 }
+.hero-content{padding:4rem 1rem;}
 h1{
   font-size:3rem;
   color:var(--tx);
   text-shadow:var(--glow),0 0 3px #000,0 0 3px #000,0 0 3px #000;
   margin-bottom:1.5rem;
 }
-.hero-content p{
+p{
   margin-bottom:2rem;
   font-size:1.1rem;
   text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;
 }
-@keyframes scan{
-  0%{transform:translateY(-100%)}
-  100%{transform:translateY(100%)}
-}
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  height:2px;
-  background:var(--tx);
-  opacity:.08;
-  pointer-events:none;
-  animation:scan 4s linear infinite;
-}
-.content-section{
-  position:relative;
-  background:url(https://tr.rbxcdn.com/180 DAY-AheadTemplateRobloxHomepage.png) center/cover;
-  padding:4rem 2rem;
-  overflow:hidden;
-}
-.content-section::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.25);
-}
-.matrix-lines{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-  overflow:hidden;
-}
-.line{
-  position:absolute;
-  top:0;
-  bottom:0;
-  width:4px;
-  background:var(--tx);
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.75rem 1.5rem;border-radius:.5rem;font-weight:600;text-decoration:none;
+  background:linear-gradient(135deg,var(--af),var(--at));
+  color:#fff;
   box-shadow:var(--glow);
-  animation:fall 6s linear infinite;
+  transition:transform .2s,box-shadow .2s;
 }
-.line:nth-child(1){left:5%; animation-delay:0s;}
-.line:nth-child(2){left:15%; animation-delay:1s;}
-.line:nth-child(3){left:25%; animation-delay:2s;}
-.line:nth-child(4){left:35%; animation-delay:3s;}
-.line:nth-child(5){left:45%; animation-delay:4s;}
-.line:nth-child(6){left:55%; animation-delay:5s;}
-.line:nth-child(7){left:65%; animation-delay:0.5s;}
-.line:nth-child(8){left:75%; animation-delay:1.5s;}
-.line:nth-child(9){left:85%; animation-delay:2.5s;}
-.line:nth-child(10){left:95%; animation-delay:3.5s;}
-@keyframes fall{
-  0%{transform:translateY(-100%);}
-  100%{transform:translateY(100vh);}
-}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 6px var(--tx),0 0 12px var(--tx),0 0 24px var(--tx);}
 .slides{
   position:relative;
-  z-index:2;
+  z-index:3;
   display:flex;
   gap:2rem;
   justify-content:center;
   flex-wrap:wrap;
+  padding:4rem 2rem;
 }
 .slide{
   background:var(--su);
@@ -140,18 +128,9 @@ body::before{
   margin-bottom:2rem;
   text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;
 }
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
-  padding:.75rem 1.5rem;border-radius:.5rem;font-weight:600;text-decoration:none;
-  background:linear-gradient(135deg,var(--af),var(--at));
-  color:#fff;
-  box-shadow:var(--glow);
-  transition:transform .2s,box-shadow .2s;
-}
-.btn:hover{transform:translateY(-2px);box-shadow:0 0 6px var(--tx),0 0 12px var(--tx),0 0 24px var(--tx);}
 .previews{
   position:relative;
-  z-index:2;
+  z-index:3;
   padding:4rem 2rem;
   text-align:center;
 }
@@ -184,59 +163,94 @@ footer p{margin:.25rem 0;text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000;}
 </head>
 <body>
 
+<!-- HERO MATRIX -->
 <section class="hero">
+  <div class="matrix-bg"></div>
+  <div class="matrix-rain" id="heroRain"></div>
   <div class="hero-content">
     <h1>Hythera External</h1>
     <p>Free Roblox Cheat with Built in Aimbot, ESP, Trolling Section, External Executor and a lot more!</p>
-    <a class="btn" href="#content">Explore</a>
+    <a class="btn" href="#mid-matrix">Explore</a>
   </div>
 </section>
 
-<section id="content" class="content-section">
-  <div class="matrix-lines">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div>
-  <div class="slides">
-    <div class="slide">
-      <h2>Download</h2>
-      <p>Get the latest build instantly.</p>
-      <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download</a>
+<!-- MID MATRIX -->
+<section id="mid-matrix" class="mid-matrix">
+  <div class="matrix-bg"></div>
+  <div class="matrix-rain" id="midRain"></div>
+  <div class="mid-content">
+    <div class="slides">
+      <div class="slide">
+        <h2>Download</h2>
+        <p>Get the latest build instantly.</p>
+        <a class="btn" href="https://github.com/itsTurdle/loader/raw/refs/heads/main/Hythera.exe">Download</a>
+      </div>
+      <div class="slide">
+        <h2>Discord</h2>
+        <p>Join for support & updates.</p>
+        <a class="btn" href="https://discord.gg/KavcMyy7aW">Join Discord</a>
+      </div>
+      <div class="slide">
+        <h2>Contact</h2>
+        <p>@Turdle<br>@Hydrx<br>@WebSlink</p>
+      </div>
     </div>
-    <div class="slide">
-      <h2>Discord</h2>
-      <p>Join for support & updates.</p>
-      <a class="btn" href="https://discord.gg/KavcMyy7aW">Join Discord</a>
+    <div class="previews">
+      <h2>Previews</h2>
+      <img src="image.png" alt="Hythera preview" class="preview-img">
     </div>
-    <div class="slide">
-      <h2>Contact</h2>
-      <p>@its_turdle<br>@kingstewiereal<br>WebSlink (ilovecheese__22)</p>
-    </div>
-  </div>
-  <div class="previews">
-    <h2>Previews</h2>
-    <img src="image.png" alt="Hythera preview" class="preview-img">
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <h3>Credits</h3>
-  <p>Hydrax (Founder)</p>
+  <p>Hydrx (Founder)</p>
   <p>Turdle (Co-Founder)</p>
   <p>WebSlink (Website Creator)</p>
   <br>
-  <p>© Rights Reserved to @Hydrax (@kingstewiereal)</p>
+  <p>© Rights Reserved to @Hydrx (@kingstewiereal)</p>
 </footer>
 
 <script>
+// ---- matrix rain + stars ----
+function initMatrix(containerId){
+  const container=document.getElementById(containerId);
+  const symbols='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+  const numbers='0123456789';
+  const chars=numbers+numbers+symbols; // twice as many numbers
+
+  // stars
+  for(let i=0;i<40;i++){
+    const star=document.createElement('div');
+    star.className='star';
+    star.style.width=star.style.height=(1+Math.random()*2)+'px';
+    star.style.left=Math.random()*100+'%';
+    star.style.top=Math.random()*100+'%';
+    star.style.animationDelay=Math.random()*3+'s';
+    container.appendChild(star);
+  }
+  // rain
+  for(let i=0;i<120;i++){
+    const drop=document.createElement('div');
+    drop.className='drop';
+    drop.style.left=Math.random()*100+'%';
+    drop.style.animationDuration=(8+Math.random()*6)+'s';
+    drop.style.animationDelay=Math.random()*5+'s';
+    drop.textContent=chars[Math.floor(Math.random()*chars.length)];
+    container.appendChild(drop);
+  }
+  // randomize chars
+  setInterval(()=>{
+    container.querySelectorAll('.drop').forEach(d=>{
+      d.textContent=chars[Math.floor(Math.random()*chars.length)];
+    });
+  },250);
+}
+initMatrix('heroRain');
+initMatrix('midRain');
+
+// ---- slide reveal ----
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting)entry.target.classList.add('visible');
