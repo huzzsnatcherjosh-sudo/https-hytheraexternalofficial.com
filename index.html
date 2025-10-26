@@ -300,7 +300,7 @@ async function fetchUsers(){
   }catch{liveEl.textContent='?';}
 }
 fetchUsers();
-setInterval(fetchUsers,60000);
+setInterval(fetchUsers,10000);
 
 // ---- feature cards ----
 const details={
@@ -323,3 +323,4 @@ document.querySelectorAll('.feature').forEach(el=>{
 
 </body>
 </html>
+
